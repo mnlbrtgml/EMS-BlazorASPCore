@@ -5,24 +5,20 @@ namespace EMS.Service.Employees
 {
 	public class EService : BaseDataAccessFactory, IEService
 	{
-		private readonly IEGet employeeList;
-		private readonly IEGet employeeBy;
+		private readonly IEGet getEmployees;
 		private readonly IEInsert insertEmployee;
 		private readonly IEUpdate updateEmployee;
 		private readonly IEDelete deleteEmployee;
 
 		public EService()
 		{
-			employeeList = new EGet(DataAccesses);
-			employeeBy = new EGet(DataAccesses);
+			getEmployees = new EGet(DataAccesses);
 			insertEmployee = new EInsert(DataAccesses);
 			updateEmployee = new EUpdate(DataAccesses);
 			deleteEmployee = new EDelete(DataAccesses);
 		}
 
-		public List<Employee> GetEmployeeList() => employeeList.GetEmployeeList(string.Empty, string.Empty);
-
-		public List<Employee> GetEmployeeBy(string Filter, string Value) => employeeBy.GetEmployeeList(Filter, Value);
+		public List<Employee> GetEmployees(string Filter, string Value) => getEmployees.GetEmployees(Filter, Value);
 
 		public string InsertEmployee(Employee Model) => insertEmployee.InsertEmployee(Model);
 

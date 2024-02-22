@@ -1,10 +1,12 @@
 ﻿using EMS.Shared.Models;
 
-namespace EMS.Server.Models
+namespace EMS.Client.Services
 {
-	public interface IMainEmployee
+	public interface IService
 	{
-		Task<List<Employee>> GetEmployees(string Filter, string Value);
+		Task<List<Employee>?> GetEmployeeList();
+
+		Task<List<Employee>?> GetEmployeeBy(string Filter, string Value);
 
 		Task<string> InsertEmployee(Employee Model);
 

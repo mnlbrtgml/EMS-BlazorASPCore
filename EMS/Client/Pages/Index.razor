@@ -1,9 +1,14 @@
 ﻿@page "/"
+@using EMS.Client.Components;
+@using EMS.Shared.Models;
 
-<PageTitle>Index</PageTitle>
+<div class="mb-4 px-2 pt-4 d-flex align-items-center justify-content-between gap-4">
+	<button @onclick="@(() => ShowModal())" type="button">Add new employee</button>
 
-<h1>Hello, world!</h1>
+	<div class="d-flex align-items-center gap-2">
+		<TheSearch></TheSearch>
+	</div>
+</div>
 
-Welcome to your new app.
+<TheTable></TheTable>
 
-<SurveyPrompt Title="How is Blazor working for you?" />

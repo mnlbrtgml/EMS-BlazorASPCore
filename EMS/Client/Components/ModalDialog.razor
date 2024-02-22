@@ -1,0 +1,55 @@
+﻿<dialog>
+	<div>
+		<h4 class="mb-4">Employee Details</h4>
+
+		<div class="p-4 d-grid gap-2">
+			<label for="name">
+				<span class="d-block">Name</span>
+				<input @bind-value="Model.EmployeeName" type="text" id="name" class="w-100" />
+			</label>
+
+			<label for="age">
+				<span class="d-block">Age</span>
+				<input @bind-value="Model.EmployeeAge" type="number" id="age" class="w-100" />
+			</label>
+
+			<div>
+				<span class="d-block">Gender</span>
+
+				<div class="ps-4 d-flex align-items-center gap-4">
+					<label for="male">
+						<input checked="@(Model.EmployeeGender.Equals("Male"))" @onchange="BindGenderToModel" value="Male" type="radio" name="gender" id="male" />
+						<span>Male</span>
+					</label>
+
+					<label for="female">
+						<input checked="@(Model.EmployeeGender.Equals("Female"))" @onchange="BindGenderToModel" value="Female" type="radio" name="gender" id="female" />
+						<span>Female</span>
+					</label>
+				</div>
+			</div>
+
+			<label for="status">
+				<span class="d-block">Status @Model.EmployeeStatus</span>
+
+				<select @bind="@Model.EmployeeStatus" class="w-100" id="status">
+					<option selected="@(Model.EmployeeStatus.Equals("Active"))" value="Active">Active</option>
+					<option selected="@(Model.EmployeeStatus.Equals("Inactive"))" value="Inactive">Inactive</option>
+				</select>
+			</label>
+
+			<label for="date">
+				<span class="d-block">Date of Birth</span>
+				<input @bind-value="@Model.EmployeeDateOfBirth" type="date" id="date" class="w-100" />
+			</label>
+		</div>
+
+		<div class="mt-4 d-flex justify-content-end gap-2">
+			<button onclick="@(() => DeleteEmployee())" type="button" class="@(Action == "fromTable" ? "" : "d-none")">Delete</button>
+			<button @onclick="@(() => UnshowModal())" type="button" class="ms-auto">Cancel</button>
+			<button @onclick="@(() => HandleSaving())" disabled="@(!ValidateModel())" type="button">@(Action == "fromTable" ? "Save" : "Create")</button>
+		</div>
+	</div>
+</dialog>
+
+<ToastNotification Status="@status" Description="@description"></ToastNotification>

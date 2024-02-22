@@ -14,17 +14,16 @@ namespace EMS.Server.Controllers
 		public EmployeesController() => _mainEmployee = new MainEmployee();
 
 		[HttpGet("getEmployeeList")]
-		public async Task<ActionResult<List<Employee>>> GetEmployeeList()
+		public async Task<ActionResult<List<Employee>?>> GetEmployeeList()
 		{
-			var result = await _mainEmployee.GetEmployeeList();
+			var result = await _mainEmployee.GetEmployees(string.Empty, string.Empty);
 			return Ok(result);
 		}
 
 		[HttpGet("getEmployeeBy/{Filter}/{Value}")]
-		public async Task<ActionResult<Employee>> GetEmployeeById(string Filter, string Value)
+		public async Task<ActionResult<Employee>> GetEmployeeBy(string Filter, string Value)
 		{
-			string _ = $"{Filter} and {Value}";
-			var result = await _mainEmployee.GetEmployeeBy(Filter, Value);
+			var result = await _mainEmployee.GetEmployees(Filter, Value);
 			return Ok(result);
 		}
 
@@ -35,7 +34,7 @@ namespace EMS.Server.Controllers
 			return Ok(result);
 		}
 
-		[HttpPut("updateEmployee")]
+		[HttpPut("updateEmployee/{EmployeeID}")]
 		public async Task<ActionResult<string>> UpdateEmployee([FromBody] Employee Model)
 		{
 			var result = await _mainEmployee.UpdateEmployee(Model);

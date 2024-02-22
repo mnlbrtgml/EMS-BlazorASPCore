@@ -6,15 +6,15 @@ namespace EMS.Business.DomainServices.Employees
 	public class EGet : Base, IEGet
 	{
 		private List<Employee> employeeList;
-		private string _filter;
-		private string _value;
+		private string _filter = string.Empty;
+		private string _value = string.Empty;
 
 		public EGet(List<IDataAccess> pDataAccess) : base(pDataAccess)
 		{
 			employeeList = new();
 		}
 
-		public List<Employee> GetEmployeeList(string Filter, string Value)
+		public List<Employee> GetEmployees(string Filter, string Value)
 		{
 			_filter = Filter;
 			_value = Value;
@@ -36,7 +36,7 @@ namespace EMS.Business.DomainServices.Employees
 		{
 			if (!IsValid) return;
 
-			employeeList = DLEmployees.GetEmployeeList();
+			employeeList = DLEmployees.GetEmployees(_filter, _value);
 		}
 	}
 }

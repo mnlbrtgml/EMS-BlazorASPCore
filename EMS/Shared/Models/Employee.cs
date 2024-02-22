@@ -7,16 +7,16 @@ namespace EMS.Shared.Models
 		public int EmployeeID { get; set; }
 
 		[Required]
-		public string? EmployeeName { get; set; }
+		public string EmployeeName { get; set; } = string.Empty;
 
 		[Required]
-		public int? EmployeeAge { get; set; }
+		public int EmployeeAge { get; set; } = 18;
 
 		[Required]
-		public string? EmployeeGender { get; set; } = "Male";
+		public string EmployeeGender { get; set; } = "Male";
 
 		[Required]
-		public string? EmployeeStatus { get; set; } = "Active";
+		public string EmployeeStatus { get; set; } = "Active";
 
 		[Required]
 		//public DateOnly? EmployeeDateOfBirth { get; set; } = DateOnly.FromDateTime(DateTime.Now);

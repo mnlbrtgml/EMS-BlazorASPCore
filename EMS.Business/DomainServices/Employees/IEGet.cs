@@ -4,6 +4,6 @@ namespace EMS.Business.DomainServices.Employees
 {
 	public interface IEGet
 	{
-		List<Employee> GetEmployeeList(string Filter, string Value);
+		List<Employee> GetEmployees(string Filter, string Value);
 	}
 }

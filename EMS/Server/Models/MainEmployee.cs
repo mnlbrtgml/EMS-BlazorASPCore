@@ -9,9 +9,7 @@ namespace EMS.Server.Models
 
 		public MainEmployee() => employeeService = new EService();
 
-		public async Task<List<Employee>> GetEmployeeList() => employeeService.GetEmployeeList();
-
-		public async Task<List<Employee>> GetEmployeeBy(string Filter, string Value) => employeeService.GetEmployeeBy(Filter, Value);
+		public async Task<List<Employee>> GetEmployees(string Filter, string Value) => employeeService.GetEmployees(Filter, Value);
 
 		public async Task<string> InsertEmployee(Employee Model) => employeeService.InsertEmployee(Model);
 

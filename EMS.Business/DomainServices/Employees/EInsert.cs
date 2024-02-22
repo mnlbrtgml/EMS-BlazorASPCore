@@ -7,7 +7,7 @@ namespace EMS.Business.DomainServices.Employees
 	{
 		private string _messageCode = string.Empty;
 
-		private Employee? _model;
+		private Employee _model;
 
 		public EInsert(List<IDataAccess> pDataAccess) : base(pDataAccess)
 		{

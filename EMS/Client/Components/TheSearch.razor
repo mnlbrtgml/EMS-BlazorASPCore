@@ -1,0 +1,15 @@
+﻿<div data-component="dropdown">
+	<button @onclick="@(() => ToggleDropdown())" type="button" data-dropdown-toggler>@selected</button>
+
+	<ul data-dropdown-status="@(isVisible ? "visible" : "hidden")">
+		<li @onclick="@(() => SelectItem("Name"))">Name</li>
+		<li @onclick="@(() => SelectItem("Age"))">Age</li>
+		<li @onclick="@(() => SelectItem("Gender"))">Gender</li>
+		<li @onclick="@(() => SelectItem("Status"))">Status</li>
+		<li @onclick="@(() => SelectItem("Date of Birth"))">Date of Birth</li>
+	</ul>
+</div>
+
+<input type="text" placeholder="Search" />
+
+<button type="button">Search</button>

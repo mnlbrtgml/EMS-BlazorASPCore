@@ -8,27 +8,12 @@ namespace EMS.DataSQL.Employees
 {
 	public class DLEmployees : BaseDataAccess, IDLEmployees
 	{
-		const string SP_GetEmployees = "sp_GetEmployees";
-		const string SP_InsertEmployee = "sp_InsertEmployee";
-		const string SP_UpdateEmployee = "sp_UpdateEmployee";
-		const string SP_DeleteEmployee = "sp_DeleteEmployee";
+		private const string SP_GetEmployees = "sp_GetEmployees";
+		private const string SP_InsertEmployee = "sp_InsertEmployee";
+		private const string SP_UpdateEmployee = "sp_UpdateEmployee";
+		private const string SP_DeleteEmployee = "sp_DeleteEmployee";
 
-		public List<Employee> GetEmployeeList()
-		{
-			IList<Employee> result = new List<Employee>();
-
-			using (var connection = new EmsDbContext(builder.Options))
-			{
-				connection.LoadStoredProc(SP_GetEmployees)
-					.WithSqlParam("@Filter", string.Empty)
-					.WithSqlParam("@Value", string.Empty)
-					.ExecuteStoredProc(handler => result = handler.ReadToList<Employee>());
-			}
-
-			return result.ToList();
-		}
-
-		public List<Employee> GetEmployeeBy(string Filter, string Value)
+		public List<Employee> GetEmployees(string Filter, string Value)
 		{
 			IList<Employee> result = new List<Employee>();
 
@@ -45,22 +30,22 @@ namespace EMS.DataSQL.Employees
 
 		public string InsertEmployee(Employee Model)
 		{
-			DbParameter result = null;
+			DbParameter? result = null;
 
 			using (var connection = new EmsDbContext(builder.Options))
 			{
 				connection.LoadStoredProc(SP_InsertEmployee)
 					.WithSqlParam("@EmployeeName", Model.EmployeeName)
-					.WithSqlParam("@EmployeeGender", Model.EmployeeGender)
 					.WithSqlParam("@EmployeeAge", Model.EmployeeAge)
-					.WithSqlParam("@EmployeeStatus", Model.EmployeeStatus)
+					.WithSqlParam("@EmployeeGender", ParseGender(Model.EmployeeGender))
+					.WithSqlParam("@EmployeeStatus", ParseStatus(Model.EmployeeStatus))
 					.WithSqlParam("@EmployeeDateOfBirth", Model.EmployeeDateOfBirth)
-					.WithSqlParam("@MessageCode", param =>
+					.WithSqlParam("@MessageCode", output =>
 					{
-						param.Direction = ParameterDirection.Output;
-						param.DbType = DbType.String;
-						param.Size = 150;
-						result = param;
+						output.Direction = ParameterDirection.Output;
+						output.DbType = DbType.String;
+						output.Size = 150;
+						result = output;
 					})
 					.ExecuteStoredProc(_ => { });
 			}
@@ -70,23 +55,23 @@ namespace EMS.DataSQL.Employees
 
 		public string UpdateEmployee(Employee Model)
 		{
-			DbParameter result = null;
+			DbParameter? result = null;
 
 			using (var connection = new EmsDbContext(builder.Options))
 			{
 				connection.LoadStoredProc(SP_UpdateEmployee)
 					.WithSqlParam("@EmployeeID", Model.EmployeeID)
 					.WithSqlParam("@EmployeeName", Model.EmployeeName)
-					.WithSqlParam("@EmployeeGender", Model.EmployeeGender)
 					.WithSqlParam("@EmployeeAge", Model.EmployeeAge)
-					.WithSqlParam("@EmployeeStatus", Model.EmployeeStatus)
+					.WithSqlParam("@EmployeeGender", ParseGender(Model.EmployeeGender))
+					.WithSqlParam("@EmployeeStatus", ParseStatus(Model.EmployeeStatus))
 					.WithSqlParam("@EmployeeDateOfBirth", Model.EmployeeDateOfBirth)
-					.WithSqlParam("@MessageCode", param =>
+					.WithSqlParam("@MessageCode", output =>
 					{
-						param.Direction = ParameterDirection.Output;
-						param.DbType = DbType.String;
-						param.Size = 150;
-						result = param;
+						output.Direction = ParameterDirection.Output;
+						output.DbType = DbType.String;
+						output.Size = 150;
+						result = output;
 					})
 					.ExecuteStoredProc(_ => { });
 			}
@@ -96,23 +81,27 @@ namespace EMS.DataSQL.Employees
 
 		public string DeleteEmployee(int EmployeeID)
 		{
-			DbParameter result = null;
+			DbParameter? result = null;
 
 			using (var connection = new EmsDbContext(builder.Options))
 			{
 				connection.LoadStoredProc(SP_DeleteEmployee)
 					.WithSqlParam("@EmployeeID", EmployeeID)
-					.WithSqlParam("@MessageCode", parameter =>
+					.WithSqlParam("@MessageCode", output =>
 					{
-						parameter.Direction = ParameterDirection.Output;
-						parameter.DbType = DbType.String;
-						parameter.Size = 150;
-						result = parameter;
+						output.Direction = ParameterDirection.Output;
+						output.DbType = DbType.String;
+						output.Size = 150;
+						result = output;
 					})
 					.ExecuteStoredProc(_ => { });
 			}
 
 			return (string)result.Value;
 		}
+
+		private int ParseStatus(string Status) => Status == "Active" ? 1 : 0;
+
+		private char ParseGender(string Gender) => Convert.ToChar(Gender[0]);
 	}
 }

@@ -5,7 +5,6 @@ namespace EMS.Business.DomainServices.Employees
 	public class EDelete : Base, IEDelete
 	{
 		private string _messageCode = string.Empty;
-
 		private int _id;
 
 		public EDelete(List<IDataAccess> pDataAccess) : base(pDataAccess) { }

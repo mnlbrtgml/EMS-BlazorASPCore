@@ -1,7 +1,8 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: "Poppins", sans-serif;
+    background-color: #e5e7eb;
 }
 
 h1:focus {
@@ -19,7 +20,7 @@ a, .btn-link {
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 .content {
@@ -99,3 +100,281 @@ a, .btn-link {
     .loading-progress-text:after {
         content: var(--blazor-load-percentage-text, "Loading");
     }
+
+main {
+    padding: 1rem;
+}
+
+/* //////////////// start dropdown //////////////// */
+div[data-component="dropdown"] {
+    display: grid;
+    position: relative;
+}
+
+    div[data-component="dropdown"] button {
+        border: 1px solid #d1d5db;
+        background-color: #f3f4f6;
+        color: #374151;
+        width: 10rem;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        text-align: left;
+        position: relative;
+    }
+
+        div[data-component="dropdown"] button::after {
+            content: "";
+            background-color: #374151;
+            width: 0.5rem;
+            height: 0.5rem;
+            position: absolute;
+            top: calc((2.625rem / 2) - 0.25rem);
+            right: 1rem;
+            clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+        }
+
+    div[data-component="dropdown"] ul {
+        border: 1px solid #d1d5db;
+        background-color: #f3f4f6;
+        margin: 0;
+        padding: 0;
+        cursor: pointer;
+        list-style: none;
+        border-radius: 0.5rem;
+        position: absolute;
+        top: 2.925rem;
+        right: 0;
+        z-index: 9999;
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    }
+
+        div[data-component="dropdown"] ul[data-dropdown-status="hidden"] {
+            display: none;
+        }
+
+        div[data-component="dropdown"] ul li {
+            padding: 0.25rem 1rem;
+        }
+
+            div[data-component="dropdown"] ul li:hover {
+                background-color: #059669;
+                color: #f3f4f6;
+            }
+/* //////////////// end dropdown //////////////// */
+
+
+/* //////////////// start table //////////////// */
+:root {
+    --grid-cols: 5;
+    --col-span: 1;
+}
+
+table {
+    min-width: 100%;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    max-height: 50rem;
+    text-align: center;
+}
+
+caption {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+thead {
+    background-color: #059669;
+    color: #f3f4f6;
+    border-inline: 2px solid #059669;
+    border-top: 2px solid #059669;
+    text-transform: uppercase;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+th:nth-child(1) {
+    border-right: 2px solid #f3f4f6;
+}
+
+th:nth-child(2) {
+    border-right: 2px solid #f3f4f6;
+    border-left: 1px solid #f3f4f6;
+}
+
+th:nth-child(3) {
+    border-inline: 1px solid #f3f4f6;
+}
+
+th:nth-child(4) {
+    border-right: 1px solid #f3f4f6;
+    border-left: 2px solid #f3f4f6;
+}
+
+th:nth-child(5) {
+    border-left: 2px solid #f3f4f6;
+}
+
+tbody {
+    border-inline: 2px solid gray;
+    border-block: 2px solid gray;
+    border-top-color: #059669;
+    overflow-y: auto;
+    scrollbar-color: #059669 #f3f4f6;
+    scrollbar-width: thin;
+    scrollbar-arrow-color: #f3f4f6;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
+    tbody tr:not(:last-child) {
+        border-bottom: 1px solid gray;
+    }
+
+    tbody tr {
+        background-color: #f3f4f6;
+        color: #334155;
+        position: relative;
+        cursor: pointer;
+    }
+
+        tbody tr:hover {
+            background-color: #e5e7eb;
+            color: #1f2937;
+        }
+
+:is(th, td) {
+    padding: 0.75rem 1rem;
+    grid-column: span var(--col-span) / span var(--col-span);
+}
+
+tr {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
+}
+
+    tr td:first-child {
+        text-align: start;
+    }
+/* //////////////// end table //////////////// */
+
+
+/* //////////////// start toast //////////////// */
+div[data-component="toast-notification"] {
+    width: max-content;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    position: fixed;
+    right: 4rem;
+    bottom: 4rem;
+    transform: translateY(calc(100% + 4rem));
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.25, 1.35);
+}
+
+    div[data-component="toast-notification"].success {
+        border: 1px solid #16a34a;
+        background-color: #dcfce7;
+    }
+
+    div[data-component="toast-notification"].error {
+        border: 1px solid #dc2626;
+        background-color: #fee2e2;
+    }
+
+    div[data-component="toast-notification"].active {
+        transform: translateX(0);
+    }
+
+    div[data-component="toast-notification"] :is(p, svg, button) {
+        padding: 0;
+        margin: 0;
+    }
+
+    div[data-component="toast-notification"] svg {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    div[data-component="toast-notification"] button {
+        border-color: transparent;
+        background-color: transparent;
+        color: #374151;
+        width: min-content;
+        height: min-content;
+    }
+
+    div[data-component="toast-notification"] > div {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+        div[data-component="toast-notification"] > div p:first-of-type {
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        div[data-component="toast-notification"] > div p:last-of-type {
+            font-size: 0.75rem;
+        }
+
+    div[data-component="toast-notification"].success > div :is(svg, p:first-of-type) {
+        color: #16a34a;
+    }
+
+    div[data-component="toast-notification"].error > div :is(svg, p:first-of-type) {
+        color: #dc2626;
+    }
+/* //////////////// end toast //////////////// */
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+:is(input, select) {
+    border: 1px solid #d1d5db;
+    background-color: #f3f4f6;
+    color: #374151;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+}
+
+button:not([data-dropdown-button]) {
+    border: 1px solid #059669;
+    background-color: #059669;
+    color: #f3f4f6;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+}
+
+    button:not([data-dropdown-button])[disabled] {
+        cursor: not-allowed;
+    }
+/* //////////////// start dialog //////////////// */
+dialog {
+    background-color: transparent;
+    max-width: 30rem;
+    width: 100%;
+    padding: 1rem;
+    border: none;
+}
+
+    dialog::backdrop {
+        background: hsla(221, 39%, 11%, 0.7)
+    }
+
+    dialog > div {
+        background-color: #e5e7eb;
+        color: #1f2937;
+        padding: 1rem;
+        border: 1px solid lightgray;
+        border-radius: 0.5rem;
+        position: relative;
+    }
+/* //////////////// end dialog //////////////// */

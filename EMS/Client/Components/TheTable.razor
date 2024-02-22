@@ -1,0 +1,35 @@
+﻿<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Age</th>
+			<th>Gender</th>
+			<th>Status</th>
+			<th>Date of birth</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		@if (Employees.Count == 0)
+		{
+			<tr>
+				<td>No employees found!</td>
+			</tr>
+		}
+		else
+		{
+			@foreach (var Model in Employees)
+			{
+				<tr @onclick="@(() => ShowModal(Model))">
+					<td>@Model.EmployeeName</td>
+					<td>@Model.EmployeeAge</td>
+					<td>@Model.EmployeeGender</td>
+					<td>@Model.EmployeeStatus</td>
+					<td>@Model.EmployeeDateOfBirth</td>
+				</tr>
+			}
+		}
+	</tbody>
+</table>
+
+<ModalDialog Model="@Employee" action="@(isFromTable ? "fromTable" : "notFromTable")" Refresher="@GetEmployeeList"></ModalDialog>
