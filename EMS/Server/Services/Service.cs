@@ -13,6 +13,8 @@ namespace EMS.Server.Services
 		const string SP_InsertEmployee = "sp_InsertEmployee";
 		const string SP_UpdateEmployee = "sp_UpdateEmployee";
 		const string SP_DeleteEmployee = "sp_DeleteEmployee";
+		const string SP_InsertJsonEmployee = "sp_InsertJsonEmployee";
+		const string SP_UpdateJsonEmployee = "sp_UpdateJsonEmployee";
 
 		public Service(ISqlQueryObject context) => _context = context;
 
@@ -131,6 +133,44 @@ namespace EMS.Server.Services
 			_context.Parameters = new SqlParameter[]
 			{
 				new SqlParameter("@EmployeeID", EmployeeID),
+			};
+
+			await _context.ExecuteAsync();
+
+			if (_context.OnFailure) return null;
+
+			var row = _context.Result.Tables[0].AsEnumerable().FirstOrDefault();
+
+			if (row == null) return null;
+
+			return new Response<string> { Message = Convert.ToString(row["MessageCode"]) };
+		}
+
+		public async Task<Response<string>> InsertJsonEmployee(string JData)
+		{
+			_context.ProcedureName = SP_InsertJsonEmployee;
+			_context.Parameters = new SqlParameter[]
+			{
+				new SqlParameter("@JData", JData),
+			};
+
+			await _context.ExecuteAsync();
+
+			if (_context.OnFailure) return null;
+
+			var row = _context.Result.Tables[0].AsEnumerable().FirstOrDefault();
+
+			if (row == null) return null;
+
+			return new Response<string> { Message = Convert.ToString(row["MessageCode"]) };
+		}
+
+		public async Task<Response<string>> UpdateJsonEmployee(string JData)
+		{
+			_context.ProcedureName = SP_UpdateJsonEmployee;
+			_context.Parameters = new SqlParameter[]
+			{
+				new SqlParameter("@JData", JData),
 			};
 
 			await _context.ExecuteAsync();

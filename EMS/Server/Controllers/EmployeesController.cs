@@ -47,5 +47,19 @@ namespace EMS.Server.Controllers
 			var result = await _mainEmployee.DeleteEmployee(EmployeeID);
 			return Ok(result);
 		}
+
+		[HttpPost("insertJsonEmployee")]
+		public async Task<ActionResult<string>> InsertJsonEmployee([FromBody] Employee Model)
+		{
+			var result = await _mainEmployee.InsertJsonEmployee(Model);
+			return Ok(result);
+		}
+
+		[HttpPut("updateJsonEmployee/{EmployeeID}")]
+		public async Task<ActionResult<string>> UpdateJsonEmployee([FromBody] Employee Model)
+		{
+			var result = await _mainEmployee.UpdateJsonEmployee(Model);
+			return Ok(result);
+		}
 	}
 }

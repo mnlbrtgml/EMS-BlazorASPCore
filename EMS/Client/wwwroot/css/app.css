@@ -156,6 +156,14 @@ div[data-component="dropdown"] {
             padding: 0.25rem 1rem;
         }
 
+            div[data-component="dropdown"] ul li:first-of-type {
+                border-radius: 0.5rem 0.5rem 0 0;
+            }
+
+            div[data-component="dropdown"] ul li:last-of-type {
+                border-radius: 0 0 0.5rem 0.5rem;
+            }
+
             div[data-component="dropdown"] ul li:hover {
                 background-color: #059669;
                 color: #f3f4f6;

@@ -16,5 +16,9 @@ namespace EMS.Server.Models
 		public async Task<string> UpdateEmployee(Employee Model) => employeeService.UpdateEmployee(Model);
 
 		public async Task<string> DeleteEmployee(int EmployeeID) => employeeService.DeleteEmployee(EmployeeID);
+
+		public async Task<string> InsertJsonEmployee(Employee Model) => employeeService.InsertJsonEmployee(Model);
+
+		public async Task<string> UpdateJsonEmployee(Employee Model) => employeeService.UpdateJsonEmployee(Model);
 	}
 }

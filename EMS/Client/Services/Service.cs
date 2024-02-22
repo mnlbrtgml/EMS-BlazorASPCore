@@ -1,6 +1,7 @@
 ﻿using EMS.Shared.Models;
 using Newtonsoft.Json;
 using System.Net.Http.Json;
+using System.Reflection;
 using System.Text;
 
 namespace EMS.Client.Services
@@ -56,6 +57,17 @@ namespace EMS.Client.Services
 		public async Task<string> DeleteEmployee(int EmployeeID)
 		{
 			var response = await httpClient.DeleteAsync($"{baseUri}/deleteEmployee/{EmployeeID}");
+
+			response.EnsureSuccessStatusCode();
+
+			return await response.Content.ReadAsStringAsync();
+		}
+
+		public async Task<string> InsertJsonEmployee(Employee Model)
+		{
+			var serialized = JsonConvert.SerializeObject(Model);
+			var data = new StringContent(serialized, Encoding.UTF8, "application/json");
+			var response = await httpClient.PostAsync($"{baseUri}/insertJsonEmployee", data);
 
 			response.EnsureSuccessStatusCode();
 

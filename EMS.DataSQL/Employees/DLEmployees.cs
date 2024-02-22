@@ -3,6 +3,7 @@ using EMS.Business.Models;
 using EMS.Shared.Models;
 using System.Data;
 using System.Data.Common;
+using System.Text.Json.Nodes;
 
 namespace EMS.DataSQL.Employees
 {
@@ -12,6 +13,7 @@ namespace EMS.DataSQL.Employees
 		private const string SP_InsertEmployee = "sp_InsertEmployee";
 		private const string SP_UpdateEmployee = "sp_UpdateEmployee";
 		private const string SP_DeleteEmployee = "sp_DeleteEmployee";
+		private const string SP_InsertJsonEmployee = "sp_InsertJsonEmployee";
 
 		public List<Employee> GetEmployees(string Filter, string Value)
 		{
@@ -30,7 +32,7 @@ namespace EMS.DataSQL.Employees
 
 		public string InsertEmployee(Employee Model)
 		{
-			DbParameter? result = null;
+			DbParameter? response = null;
 
 			using (var connection = new EmsDbContext(builder.Options))
 			{
@@ -45,17 +47,19 @@ namespace EMS.DataSQL.Employees
 						output.Direction = ParameterDirection.Output;
 						output.DbType = DbType.String;
 						output.Size = 150;
-						result = output;
+						response = output;
 					})
 					.ExecuteStoredProc(_ => { });
 			}
 
-			return (string)result.Value;
+			var result = response?.Value;
+
+			return result?.ToString()!;
 		}
 
 		public string UpdateEmployee(Employee Model)
 		{
-			DbParameter? result = null;
+			DbParameter? response = null;
 
 			using (var connection = new EmsDbContext(builder.Options))
 			{
@@ -71,17 +75,19 @@ namespace EMS.DataSQL.Employees
 						output.Direction = ParameterDirection.Output;
 						output.DbType = DbType.String;
 						output.Size = 150;
-						result = output;
+						response = output;
 					})
 					.ExecuteStoredProc(_ => { });
 			}
 
-			return (string)result.Value;
+			var result = response?.Value;
+
+			return result?.ToString()!;
 		}
 
 		public string DeleteEmployee(int EmployeeID)
 		{
-			DbParameter? result = null;
+			DbParameter? response = null;
 
 			using (var connection = new EmsDbContext(builder.Options))
 			{
@@ -92,16 +98,64 @@ namespace EMS.DataSQL.Employees
 						output.Direction = ParameterDirection.Output;
 						output.DbType = DbType.String;
 						output.Size = 150;
-						result = output;
+						response = output;
 					})
 					.ExecuteStoredProc(_ => { });
 			}
 
-			return (string)result.Value;
+			var result = response?.Value;
+
+			return result?.ToString()!;
 		}
 
-		private int ParseStatus(string Status) => Status == "Active" ? 1 : 0;
+		public string InsertJsonEmployee(string JData)
+		{
+			DbParameter? response = null;
 
-		private char ParseGender(string Gender) => Convert.ToChar(Gender[0]);
+			using (var connection = new EmsDbContext(builder.Options))
+			{
+				connection.LoadStoredProc(SP_InsertJsonEmployee)
+					.WithSqlParam("@JData", JData)
+					.WithSqlParam("@MessageCode", output =>
+					{
+						output.Direction = ParameterDirection.Output;
+						output.DbType = DbType.String;
+						output.Size = 255;
+						response = output;
+					})
+					.ExecuteStoredProc(_ => { });
+			}
+
+			var result = response?.Value;
+
+			return result?.ToString()!;
+		}
+
+		public string UpdateJsonEmployee(string JData)
+		{
+			DbParameter? response = null;
+
+			using (var connection = new EmsDbContext(builder.Options))
+			{
+				connection.LoadStoredProc(SP_InsertJsonEmployee)
+					.WithSqlParam("@JData", JData)
+					.WithSqlParam("@MessageCode", output =>
+					{
+						output.Direction = ParameterDirection.Output;
+						output.DbType = DbType.String;
+						output.Size = 255;
+						response = output;
+					})
+					.ExecuteStoredProc(_ => { });
+			}
+
+			var result = response?.Value;
+
+			return result?.ToString()!;
+		}
+
+		private static int ParseStatus(string Status) => Status == "Active" ? 1 : 0;
+
+		private static char ParseGender(string Gender) => Convert.ToChar(Gender[0]);
 	}
 }

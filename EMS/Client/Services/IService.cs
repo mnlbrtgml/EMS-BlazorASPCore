@@ -13,5 +13,7 @@ namespace EMS.Client.Services
 		Task<string> UpdateEmployee(Employee Model);
 
 		Task<string> DeleteEmployee(int EmployeeID);
+
+		Task<string> InsertJsonEmployee(Employee Model);
 	}
 }

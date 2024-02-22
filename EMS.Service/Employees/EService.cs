@@ -9,6 +9,8 @@ namespace EMS.Service.Employees
 		private readonly IEInsert insertEmployee;
 		private readonly IEUpdate updateEmployee;
 		private readonly IEDelete deleteEmployee;
+		private readonly IJEInsert insertJsonEmployee;
+		private readonly IJEUpdate updateJsonEmployee;
 
 		public EService()
 		{
@@ -16,6 +18,8 @@ namespace EMS.Service.Employees
 			insertEmployee = new EInsert(DataAccesses);
 			updateEmployee = new EUpdate(DataAccesses);
 			deleteEmployee = new EDelete(DataAccesses);
+			insertJsonEmployee = new JEInsert(DataAccesses);
+			updateJsonEmployee = new JEUpdate(DataAccesses);
 		}
 
 		public List<Employee> GetEmployees(string Filter, string Value) => getEmployees.GetEmployees(Filter, Value);
@@ -25,5 +29,9 @@ namespace EMS.Service.Employees
 		public string UpdateEmployee(Employee Model) => updateEmployee.UpdateEmployee(Model);
 
 		public string DeleteEmployee(int EmployeeID) => deleteEmployee.DeleteEmployee(EmployeeID);
+
+		public string InsertJsonEmployee(Employee Model) => insertJsonEmployee.InsertJsonEmployee(Model);
+
+		public string UpdateJsonEmployee(Employee Model) => updateJsonEmployee.UpdateJsonEmployee(Model);
 	}
 }

@@ -11,5 +11,9 @@ namespace EMS.Service.Employees
 		string UpdateEmployee(Employee Model);
 
 		string DeleteEmployee(int EmployeeID);
+
+		string InsertJsonEmployee(Employee Model);
+
+		string UpdateJsonEmployee(Employee Model);
 	}
 }

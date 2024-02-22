@@ -11,5 +11,9 @@ namespace EMS.Server.Models
 		Task<string> UpdateEmployee(Employee Model);
 
 		Task<string> DeleteEmployee(int EmployeeID);
+
+		Task<string> InsertJsonEmployee(Employee Model);
+
+		Task<string> UpdateJsonEmployee(Employee Model);
 	}
 }
